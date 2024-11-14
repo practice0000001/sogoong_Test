@@ -33,18 +33,23 @@ jobs:
         run: |
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Check for test files
+        id: check_tests
+        run: |
+          echo "::set-output name=has_tests::$(find . -name 'test_*.py' | wc -l)"
       - name: Test with pytest
+        if: steps.check_tests.outputs.has_tests != '0'
         run: |
           pytest --junitxml=test-results/results.xml
       - name: Publish test results as PR comment
+        if: steps.check_tests.outputs.has_tests != '0'
         uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
         with:
           files: 'test-results/results.xml'
           check_name: 'Unit Tests Results'
       - name: Comment on PR for failed test lines
+        if: steps.check_tests.outputs.has_tests != '0'
         uses: mikepenz/action-junit-report@v3
-        if: always()
         with:
           report_paths: 'test-results/results.xml'
           token: ${{ secrets.GITHUB_TOKEN }}
