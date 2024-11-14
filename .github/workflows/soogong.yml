@@ -1,18 +1,15 @@
 name: flask-ci
-
 # main과 develop 브랜치에 푸시되거나 풀 리퀘스트가 열렸을 때 워크플로우 실행
 on:
   push:
     branches: [ "main", "develop" ]
   pull_request:
     branches: [ "main", "develop" ]
-
 permissions:
   contents: read # 레포의 콘텐츠를 읽을 수 있는 권한
   checks: write # 워크플로우가 Github Checks API를 통해 체크를 생성하거나 업데이트
   issues: write # 이슈에 댓글을 달 수 있는 권한
   pull-requests: write # 풀 리퀘스트에 댓글을 달 수 있는 권한
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -66,7 +63,7 @@ jobs:
         with:
           script: |
             # 테스트 파일이 없을 경우 PR에 코멘트를 남깁니다.
-            const comments = ["LGTM", "GOOD", "PERFECT"];  // 가능한 코멘트 목록입니다.
+            const comments = ["LGTM", "GOOD", "PERFECT"];  #가능한 코멘트 목록입니다.
             const comment = comments[Math.floor(Math.random() * comments.length)];
             await github.rest.issues.createComment({
               owner: context.repo.owner,
