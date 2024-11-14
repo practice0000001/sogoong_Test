@@ -1,5 +1,10 @@
-import pytest
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
 from calculate import add, subtract
+
+import pytest
 
 def test_add():
     assert add(1, 2) == 3, "1과 2를 더하면 3이 나와야 합니다."
