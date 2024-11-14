@@ -1,4 +1,4 @@
-from calculator import add
+from ../calculator import add
 
 def test_add():
     assert add(2, 3) == 5, "2와 3을 더하면 5가 나와야 합니다"
